@@ -37,6 +37,7 @@ export class AuthController {
 
   // Login user
   login = async (req: Request, res: Response): Promise<void> => {
+    console.log(req.body);
     try {
       const credentials: LoginRequest = req.body;
       const result = await this.authService.login(credentials);
@@ -67,6 +68,7 @@ export class AuthController {
 
   // Get user profile
   getProfile = async (req: Request, res: Response): Promise<void> => {
+    console.log(req)
     try {
       const userId = req.user!.userId;
       const result = await this.authService.getProfile(userId);
