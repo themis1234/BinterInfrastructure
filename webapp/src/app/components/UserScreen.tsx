@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Filter, Edit, Trash2, Plus, ChevronUp, ChevronDown } from 'lucide-react';
-
+import { getUsers } from '../utils/api';
 interface User {
     email: string;
     firstName: string;
@@ -8,28 +8,42 @@ interface User {
     role: string;
 }
 
-// Mock data for demonstration
-const mockUsers: User[] = [
-    { email: 'john.doe@example.com', firstName: 'John', lastName: 'Doe', role: 'admin' },
-    { email: 'jane.smith@example.com', firstName: 'Jane', lastName: 'Smith', role: 'user' },
-    { email: 'bob.johnson@example.com', firstName: 'Bob', lastName: 'Johnson', role: 'moderator' },
-    { email: 'alice.brown@example.com', firstName: 'Alice', lastName: 'Brown', role: 'user' },
-    { email: 'charlie.wilson@example.com', firstName: 'Charlie', lastName: 'Wilson', role: 'admin' },
-    { email: 'diana.martinez@example.com', firstName: 'Diana', lastName: 'Martinez', role: 'user' },
-    { email: 'edward.garcia@example.com', firstName: 'Edward', lastName: 'Garcia', role: 'moderator' },
-    { email: 'fiona.lee@example.com', firstName: 'Fiona', lastName: 'Lee', role: 'user' },
-];
+// // Mock data for demonstration
+// const mockUsers: User[] = [
+//     { email: 'john.doe@example.com', firstName: 'John', lastName: 'Doe', role: 'admin' },
+//     { email: 'jane.smith@example.com', firstName: 'Jane', lastName: 'Smith', role: 'user' },
+//     { email: 'bob.johnson@example.com', firstName: 'Bob', lastName: 'Johnson', role: 'moderator' },
+//     { email: 'alice.brown@example.com', firstName: 'Alice', lastName: 'Brown', role: 'user' },
+//     { email: 'charlie.wilson@example.com', firstName: 'Charlie', lastName: 'Wilson', role: 'admin' },
+//     { email: 'diana.martinez@example.com', firstName: 'Diana', lastName: 'Martinez', role: 'user' },
+//     { email: 'edward.garcia@example.com', firstName: 'Edward', lastName: 'Garcia', role: 'moderator' },
+//     { email: 'fiona.lee@example.com', firstName: 'Fiona', lastName: 'Lee', role: 'user' },
+// ];
 
 type SortField = keyof User;
 type SortDirection = 'asc' | 'desc';
 
 export default function UsersTableScreen() {
-    const [users, setUsers] = useState<User[]>(mockUsers);
+    const [users, setUsers] = useState<User[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('all');
     const [sortField, setSortField] = useState<SortField>('lastName');
     const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
+    useEffect(() => {
+    const fetchUsers = async () => {
+      const result = await getUsers();
+      
+      if ('user' in result) {
+        console.log(result.user)
+        setUsers(result.user);
+      } else {
+        console.log("Unhandled error")
+      }
+    };
+
+    fetchUsers();
+  }, []);
     // Filter and sort users
     const filteredAndSortedUsers = users
         .filter(user => {
