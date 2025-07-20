@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { useAuth } from "../Providers/AuthProvider";
-import styles from '../main.module.css';
+
 export default function LoginPage() {
     const { login } = useAuth();
     const [email, setEmail] = useState("");
@@ -12,16 +12,15 @@ export default function LoginPage() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setError(""); 
+        setError("");
         setIsLoading(true);
 
         try {
             const result = await login(email, password);
-            
+
             if (result && !result.success) {
                 setError(result.message || "Login failed");
             }
-            
         } catch (error) {
             setError("An unexpected error occurred");
             console.error("Login error:", error);
@@ -29,9 +28,15 @@ export default function LoginPage() {
             setIsLoading(false);
         }
     };
+
     return (
-        <div>
-            <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <form
+                onSubmit={handleSubmit}
+                className="bg-white shadow-md rounded-2xl p-8 w-full max-w-sm space-y-6"
+            >
+                <h2 className="text-2xl font-bold text-center text-gray-800">Welcome Back</h2>
+
                 <input
                     type="email"
                     placeholder="Email"
@@ -39,6 +44,7 @@ export default function LoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={isLoading}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                 />
                 <input
                     type="password"
@@ -47,9 +53,16 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     disabled={isLoading}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                 />
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit" disabled={isLoading}>
+                {error && <p className="text-red-600 text-sm">{error}</p>}
+
+                <button
+                    type="submit"
+                    disabled={isLoading}
+                    style={{ backgroundColor: "#840027" }}
+                    className="w-full text-white py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50"
+                >
                     {isLoading ? "Logging in..." : "Log in"}
                 </button>
             </form>

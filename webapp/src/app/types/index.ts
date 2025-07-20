@@ -7,3 +7,14 @@ export interface User{
     role: string
 
 }
+export enum QRCodeStatus {
+  INACTIVE = 'inactive',
+  ACTIVE = 'active',
+  COMPLETED = 'completed'
+}
+export interface QRCode {
+  id: string;
+  code: string; 
+  status: QRCodeStatus;
+  userId?: string; // null when inactive, set when activated
+}
