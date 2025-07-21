@@ -2,12 +2,12 @@
   "name": "qr-code-tracker",
   "version": "1.0.0",
   "description": "QR Code tracking system with Express.js, TypeScript, and PostgreSQL",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "scripts": {
     "build-local": "tsc",
     "build": "npm install && tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "start": "node dist/index.js",
+    "start": "node dist/server.js",
     "migrate": "ts-node src/database/migrations/runMigrations.ts"
   },
   "keywords": ["qr-code", "tracking", "express", "typescript", "postgresql"],
