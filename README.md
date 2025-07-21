@@ -1,10 +1,15 @@
 # Infrastructure Management Dashboard
 
 A comprehensive admin dashboard for visualizing and managing database content with a modern tech stack.
-**Live URLs:**
+
+## Live URLs:
 - Frontend: https://binter-infrastructure.vercel.app/
+- In order to access the app you can use the following credentials
+    email: testuser@test.com
+    password: testpassword
+
 ## Goal
--The goal of this project is to provide an UI for people with no code experience in order to visualize the Database entries.
+-The goal of this project is to provide an UI for people with no code experience in order to visualize the Database entries. 
 
 ## 🏗️ Architecture Overview
 
