@@ -38,7 +38,6 @@ declare global {
 
 // Middleware to authenticate requests
 export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
-    console.log(req.headers);
   try {
     const authHeader = req.headers.authorization;
     

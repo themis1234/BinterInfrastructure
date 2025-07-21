@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Filter, Edit, Trash2, Plus, ChevronUp, ChevronDown, QrCode as QrCodeIcon, Eye } from 'lucide-react';
 import { QRCode, QRCodeStatus } from "../types/index";
-
+import { getQRCodes } from '../utils/api';
 // Mock data for demonstration
 const mockQRCodes: QRCode[] = [
     { id: '10196718-a8b9-4975-8d20-36a54bdf869c', code: 'QR_001_ABC123', status: QRCodeStatus.INACTIVE },
@@ -20,14 +20,25 @@ type SortField = keyof QRCode;
 type SortDirection = 'asc' | 'desc';
 
 export default function QRCodesTableScreen() {
-    const [qrCodes, setQRCodes] = useState<QRCode[]>(mockQRCodes);
+    const [qrCodes, setQRCodes] = useState<QRCode[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [sortField, setSortField] = useState<SortField>('id');
     const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
     const [selectedCode, setSelectedCode] = useState<string | null>(null);
 
-    // Filter and sort QR codes
+    useEffect(() => {
+        const fetchQRCodes = async () => {
+                const response = await getQRCodes();
+                if ("qrcodes" in response) {
+                    setQRCodes(response.qrcodes);
+                }else{
+                    console.log("Unhandled error");
+                }
+            }
+        fetchQRCodes();
+    }, [])  
+
     const filteredAndSortedQRCodes = qrCodes
         .filter(qrCode => {
             const matchesSearch =
