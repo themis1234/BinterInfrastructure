@@ -23,6 +23,7 @@ const dbConfig = process.env.DATABASE_URL ? {
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
 };
+console.log('DATABASE_URL being used:', process.env.DATABASE_URL);
 
 export const pool = new Pool(dbConfig);
 
