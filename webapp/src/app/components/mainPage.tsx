@@ -8,7 +8,7 @@ import { Menu, X } from "lucide-react";
 
 export default function MainPage() {
     const [selectedDBEntry, setSelectedDBEntry] = useState<string | null>(null);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(true);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1080);
     const { logout, user } = useAuth();
 
@@ -36,7 +36,11 @@ export default function MainPage() {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [isDesktop]);
-
+    useEffect(() => {
+        if(isDesktop){
+            setIsMenuOpen(true);
+        }
+    }, [])
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -70,7 +74,7 @@ export default function MainPage() {
                     <div
                         style={{
                             position: "fixed",
-                            top: "70px", // Assuming topBar height
+                            top: "70px", 
                             left: 0,
                             right: 0,
                             bottom: 0,
@@ -134,7 +138,7 @@ export default function MainPage() {
                     height: "calc(100vh - 70px)",
                     overflowY: "auto",
                     width: "100%",
-                    marginLeft: isDesktop ? "0" : "0" // Content doesn't need margin since sidebar is fixed on mobile
+                    marginLeft: isDesktop ? "0" : "0" 
                 }}>
                     {selectedDBEntry === "users" && <UsersTableScreen />}
                     {selectedDBEntry === "qrcodes" && <QRCodesTableScreen />}
